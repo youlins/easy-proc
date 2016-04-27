@@ -1,4 +1,4 @@
-var ParallelProc = require("../").Parallel;
+var EasyProc = require("../");
 var fs = require("fs");
 
 function onFinished(result, ctx) {
@@ -10,7 +10,7 @@ function onFinished(result, ctx) {
 function readfile1(ctx, next) {
 	fs.readFile('file1.txt','utf-8',function(err,data){
 		ctx.file1 = data;
-		console.log("reading file1.txt");
+		console.log("file1.txt");
     	err?next(false):next(true);
 	});
 }
@@ -18,7 +18,7 @@ function readfile1(ctx, next) {
 function readfile2(ctx, next) {
 	fs.readFile('file2.txt','utf-8',function(err,data){
 		ctx.file2 = data;
-		console.log("reading file2.txt");
+		console.log("file2.txt");
     	err?next(false):next(true);  
 	});
 }
@@ -26,7 +26,7 @@ function readfile2(ctx, next) {
 function readfile3(ctx, next) {
 	fs.readFile('file3.txt','utf-8',function(err,data){
 		ctx.file3 = data;
-		console.log("reading file3.txt");
+		console.log("file3.txt");
     	err?next(false):next(true);  
 	});
 }
@@ -39,11 +39,10 @@ function readfile4(ctx, next) {
 	});
 }
 
-var pp = new ParallelProc("pp").then(readfile1, readfile2);
+var ep = new EasyProc("easy-proc-demo")
+.then(readfile1)
+.then(readfile2, readfile3)
+.then(readfile4);
 
-var ctx1 = {};
-pp.go(ctx1, onFinished);
-
-//ctx2 isn't affected by ctx1
-var ctx2 = {};
-pp.go(ctx2, onFinished);
+var ctx = {};
+ep.go(ctx, onFinished);

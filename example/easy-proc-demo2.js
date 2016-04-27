@@ -1,4 +1,4 @@
-var ParallelProc = require("../").Parallel;
+var EasyProc = require("../");
 var fs = require("fs");
 
 function onFinished(result, ctx) {
@@ -16,9 +16,9 @@ function readfile1(ctx, next) {
 }
 
 function readfile2(ctx, next) {
-	fs.readFile('file2.txt','utf-8',function(err,data){
-		ctx.file2 = data;
-		console.log("reading file2.txt");
+	fs.readFile('file2.txt.error','utf-8',function(err,data){
+		ctx.file2 = err;
+		console.log("reading file2.txt.error");
     	err?next(false):next(true);  
 	});
 }
@@ -34,16 +34,17 @@ function readfile3(ctx, next) {
 function readfile4(ctx, next) {
 	fs.readFile('file4.txt','utf-8',function(err,data){
 		ctx.file4 = data;
-		console.log("read file4.txt");
+		console.log("reading  file4.txt");
     	err?next(false):next(true);  
 	});
 }
 
-var pp = new ParallelProc("pp").then(readfile1, readfile2);
+var ep = new EasyProc("easy-proc-demo")
+.then(readfile1)
+.then(readfile2, readfile3)
+.then(readfile4);
 
-var ctx1 = {};
-pp.go(ctx1, onFinished);
+var ctx = {};
+ep.go(ctx, onFinished);
 
-//ctx2 isn't affected by ctx1
-var ctx2 = {};
-pp.go(ctx2, onFinished);
+//readfile2 fail, then readfile3 will run continue, but readfile4 will finish.

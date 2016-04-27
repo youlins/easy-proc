@@ -1,4 +1,4 @@
-var SerialProc = require("../").SerialProc;
+var SerialProc = require("../").Serial;
 var fs = require("fs");
 
 function onFinished(result, ctx) {

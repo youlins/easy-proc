@@ -1,4 +1,4 @@
+var EasyProc = require("./lib/easy-proc");
+console.log(EasyProc);
 
-exports.SerialProc = require("./lib/serial-proc");
-exports.ParallelProc = require("./lib/parallel-proc");
-
+module.exports = EasyProc;

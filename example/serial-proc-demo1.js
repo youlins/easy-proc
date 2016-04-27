@@ -1,4 +1,4 @@
-var SerialProc = require("../").SerialProc;
+var SerialProc = require("../").Serial;
 
 function func1(ctx, next) {
 	ctx.func1 = true;
