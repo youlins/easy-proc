@@ -3,10 +3,12 @@ var SerialProc = require("../").Serial;
 function func1(ctx, next) {
 	ctx.func1 = true;
 	next(true);
+	next(true);
 }
 
 function func2(ctx, next) {
 	ctx.func2 = true;
+	console.log("run func2");
 	next(true);
 }
 
@@ -33,5 +35,5 @@ var sp2 = new SerialProc("ss2")
 .then(func2)
 .then(func3);
 
-sp2.go(ctx1, onFinished);
+sp1.go(ctx1, onFinished);
 sp2.go(ctx2, onFinished);

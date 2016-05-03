@@ -11,6 +11,7 @@ function readfile1(ctx, next) {
 	fs.readFile('file1.txt','utf-8',function(err,data){
 		ctx.file1 = data;
 		console.log("reading file1.txt");
+		next(true);
     	err?next(false):next(true);
 	});
 }
@@ -34,12 +35,12 @@ function readfile3(ctx, next) {
 function readfile4(ctx, next) {
 	fs.readFile('file4.txt','utf-8',function(err,data){
 		ctx.file4 = data;
-		console.log("read file4.txt");
+		console.log("reading file4.txt");
     	err?next(false):next(true);  
 	});
 }
 
-var pp = new ParallelProc("pp").then(readfile1, readfile2);
+var pp = new ParallelProc("pp").then(readfile1, readfile2, readfile3, readfile4);
 
 var ctx1 = {};
 pp.go(ctx1, onFinished);

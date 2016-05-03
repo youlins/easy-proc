@@ -46,7 +46,7 @@ sp.go(ctx2, onFinished);
 The SerialProc make sure read file1 first, and then read file2.
 If exception happens when reading file1, then program will callback false at first, and file2 will not be read.
 
-##  Parallel produre
+##  Parallel Procedure
 
 ```
 var ParallelProc = require("./easy-proc").Parallel;
@@ -86,7 +86,7 @@ pp.go(ctx2, onFinished);
 The file1 and file2 will be read in the same time, and ParallelProc will wait for tow files is read finished, and then callback onFinished.
 If exception happens when reading file1 or reading file2, it will callback onFinished(false), othewise, onFinished(true).
 
-## EasyProc
+## Easy Proc
 EasyProc is base on SerialProc and ParallelProc, and it support both.
 
 ```
